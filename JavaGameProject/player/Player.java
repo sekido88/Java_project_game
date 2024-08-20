@@ -63,6 +63,7 @@ public class Player {
     }
 
     public void update() {
+
         updatePos();
         updateAnimationTick();
         setAnimation();
@@ -106,7 +107,7 @@ public class Player {
     private void updatePos() {
 
         moving = false;
-
+        // System.out.println("player dang duoc update pos");
         if (left && !right) {
             x -= playerSpeed;
             moving = true;
@@ -125,14 +126,12 @@ public class Player {
     }
 
     public void render(Graphics g) {
-
         Graphics2D g2d = (Graphics2D) g;
         if (left && !right) {
-      
             g2d.scale(-1, 1);
             g2d.drawImage(animations[playerAction.ordinal()][aniIndex], (int) -x - width, (int) y, width, height, null);
         } else {
-        
+            g2d.scale(1, 1);
             g2d.drawImage(animations[playerAction.ordinal()][aniIndex], (int) x, (int) y, width, height, null);
         }
 
