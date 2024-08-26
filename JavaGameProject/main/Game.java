@@ -2,7 +2,9 @@ package JavaGameProject.main;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import JavaGameProject.player.Player;
+
+import JavaGameProject.entites.Player;
+import JavaGameProject.levels.LevelManager;
 
 public class Game implements Runnable {
 
@@ -11,29 +13,43 @@ public class Game implements Runnable {
     private Thread gameThread;
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
-
     private Player player;
+    private LevelManager levelManager;
+
+    public final static int TILE_DEFAULT_SIZE = 48;
+    public final static float SCALE = 1.0f;
+    public final static int TILE_IN_WIDTH = 26;
+    public final static int TILE_IN_HEIGHT = 14;
+    public final static int TILES_SIZE = (int) (TILE_DEFAULT_SIZE * SCALE);
+    public final static int GAME_WIDTH = TILES_SIZE * TILE_IN_WIDTH;
+    public final static int GAME_HEIGHT = TILES_SIZE * TILE_IN_HEIGHT;
+    public final static float GRAVITY = 9.8f * Game.SCALE;
 
     public Game() {
 
         initClasses();
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel); // Phải có gameWindow trước sau đó mới focus được
-        gamePanel.requestFocus(); 
+        gamePanel.requestFocus();
 
-        
         startGameLoop();
     }
 
     private void initClasses() {
+        newLevelMangager();
         newPlayer();
     }
 
     private void newPlayer() {
-        player = new Player(50, 50, 400, 600);
+        player = new Player(100, 300, 60, 100);
         if (gamePanel != null) {
             player.setAnimationTick(gamePanel.getAniSpeed());
         }
+        player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
+    }
+
+    private void newLevelMangager() {
+        levelManager = new LevelManager(this);
     }
 
     public void startGameLoop() {
@@ -42,8 +58,7 @@ public class Game implements Runnable {
     }
 
     public void update() {
-        // System.out.println("dang duoc update");
-        if (gamePanel != null && player != null ){
+        if (gamePanel != null && player != null) {
             player.update();
             gamePanel.repaint();
         }
@@ -52,6 +67,7 @@ public class Game implements Runnable {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         player.render(g2d);
+        levelManager.draw(g2d);
     }
 
     @Override

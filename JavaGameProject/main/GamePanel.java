@@ -30,10 +30,9 @@ public class GamePanel extends JPanel {
 
     // Thiết lập kích thước panel
     private void setPanelSize() {
-        Dimension size = new Dimension(1280, 720);
-        setMinimumSize(size);
+        Dimension size = new Dimension(game.GAME_WIDTH,game.GAME_HEIGHT);
         setPreferredSize(size);
-        setMaximumSize(size);
+        System.out.println(game.GAME_HEIGHT + "|||" +game.GAME_WIDTH);
     }
 
     @Override
