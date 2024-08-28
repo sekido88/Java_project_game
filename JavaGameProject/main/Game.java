@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import JavaGameProject.entites.Player;
+import JavaGameProject.gamestates.Gamestate;
+import JavaGameProject.gamestates.Menu;
+import JavaGameProject.gamestates.Playing;
 import JavaGameProject.levels.LevelManager;
 
 public class Game implements Runnable {
@@ -14,7 +17,9 @@ public class Game implements Runnable {
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
     private Player player;
-    private LevelManager levelManager;
+
+    private Menu menu;
+    private Playing playing;
 
     public final static int TILE_DEFAULT_SIZE = 48;
     public final static float SCALE = 1.0f;
@@ -26,30 +31,12 @@ public class Game implements Runnable {
     public final static float GRAVITY = 9.8f * Game.SCALE;
 
     public Game() {
-
-        initClasses();
+   
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel); // Phải có gameWindow trước sau đó mới focus được
+        initClasses();
         gamePanel.requestFocus();
-
         startGameLoop();
-    }
-
-    private void initClasses() {
-        newLevelMangager();
-        newPlayer();
-    }
-
-    private void newPlayer() {
-        player = new Player(100, 300, 60, 100);
-        if (gamePanel != null) {
-            player.setAnimationTick(gamePanel.getAniSpeed());
-        }
-        player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
-    }
-
-    private void newLevelMangager() {
-        levelManager = new LevelManager(this);
     }
 
     public void startGameLoop() {
@@ -57,17 +44,37 @@ public class Game implements Runnable {
         gameThread.start(); // chạy phương thức run của Class g
     }
 
-    public void update() {
-        if (gamePanel != null && player != null) {
-            player.update();
-            gamePanel.repaint();
-        }
+    public void initClasses() {
+        menu = new Menu(this);
+        playing = new Playing(this);
     }
 
-    public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        player.render(g2d);
-        levelManager.draw(g2d);
+    public void update() {
+        switch (Gamestate.state) {
+            case MENU:
+                menu.update();
+                break;
+            case PLAYING:
+                playing.update();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void render(Graphics2D g2d) {
+        switch (Gamestate.state) {
+            case MENU:
+                if(menu != null) menu.draw(g2d);
+                break;
+            case PLAYING:
+                playing.draw(g2d);
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override
@@ -119,6 +126,18 @@ public class Game implements Runnable {
     }
 
     public Player getPlayer() {
-        return player;
+        return this.player;
+    }
+
+    public Menu getMenu() {
+        return this.menu;
+    }
+
+    public Playing getPlaying() {
+        return this.playing;
+    }
+
+    public GamePanel getGamePanel() {
+        return this.gamePanel;
     }
 }

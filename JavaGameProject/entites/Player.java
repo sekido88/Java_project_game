@@ -120,6 +120,7 @@ public class Player extends Entity {
 
     private void updatePos() {
         moving = false;
+        inAir = false;
         updatePosX();
         updatePosY();
         moving = left || right;
@@ -140,8 +141,10 @@ public class Player extends Entity {
     }
 
     private void updatePosY() {
+
         if (!IsEntityOnFloor(hitBox, levelData)) {
             applyForce(gravity);
+            inAir = true;
         } else {
             velocity.y = 0;
             if (jump) {
@@ -161,8 +164,7 @@ public class Player extends Entity {
                 null);
     }
 
-    public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+    public void render(Graphics2D g2d) {
         drawPlayer(g2d);
         drawHitBox(g2d);
     }

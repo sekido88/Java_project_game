@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
     - Kéo thả , drag ....
 */
 
+import JavaGameProject.gamestates.Gamestate;
 import JavaGameProject.main.GamePanel;
 
 
@@ -22,8 +23,19 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-       if (e.getButton() == MouseEvent.BUTTON1){
-            gamePanel.getGame().getPlayer().setAttacking(true);
+        switch(Gamestate.state) {
+        case MENU:
+            if( gamePanel.getGame().getMenu() != null) {
+                gamePanel.getGame().getMenu().mouseClicked(e);
+            }
+            break;
+        case PLAYING:  
+            if( gamePanel.getGame().getPlaying() != null) {
+                gamePanel.getGame().getPlaying().mouseClicked(e);
+            }
+            break; 
+        default:
+            break;    
        }
     }
 
@@ -34,7 +46,20 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-       
+        switch(Gamestate.state) {
+            case MENU:
+                if(gamePanel.getGame().getMenu() != null) {
+                    gamePanel.getGame().getMenu().mousePressed(e);
+                }
+                break;
+            case PLAYING:  
+                if(gamePanel.getGame().getPlaying() != null) {
+                    gamePanel.getGame().getPlaying().mousePressed(e);
+                }
+                break; 
+            default:
+                break;    
+           }
     }
 
     @Override
@@ -54,6 +79,19 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-       
+        switch(Gamestate.state) {
+            case MENU:
+                if(gamePanel.getGame().getMenu() != null) {
+                    gamePanel.getGame().getMenu().mouseMoved(e);
+                }
+                break;
+            case PLAYING:  
+                if(gamePanel.getGame().getPlaying() != null) {
+                    gamePanel.getGame().getPlaying().mouseMoved(e);
+                }
+                break; 
+            default:
+                break;    
+           }
     }
 }

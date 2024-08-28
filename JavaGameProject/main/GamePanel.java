@@ -30,9 +30,9 @@ public class GamePanel extends JPanel {
 
     // Thiết lập kích thước panel
     private void setPanelSize() {
-        Dimension size = new Dimension(game.GAME_WIDTH,game.GAME_HEIGHT);
+        Dimension size = new Dimension(game.GAME_WIDTH, game.GAME_HEIGHT);
         setPreferredSize(size);
-        System.out.println(game.GAME_HEIGHT + "|||" +game.GAME_WIDTH);
+        System.out.println(game.GAME_HEIGHT + "|||" + game.GAME_WIDTH);
     }
 
     @Override
@@ -40,8 +40,8 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        game.render(g);
+        game.render(g2d);
+        repaint();
     }
 
     public Game getGame() {
@@ -51,4 +51,9 @@ public class GamePanel extends JPanel {
     public int getAniSpeed() {
         return aniSpeed;
     }
+
+    public GamePanel getGamePanel() {
+        return this;
+    }
+
 }

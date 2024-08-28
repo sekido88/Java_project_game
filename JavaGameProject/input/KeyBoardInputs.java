@@ -3,6 +3,7 @@ package JavaGameProject.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import JavaGameProject.gamestates.Gamestate;
 import JavaGameProject.main.Game;
 import JavaGameProject.main.GamePanel;
 
@@ -19,41 +20,29 @@ public class KeyBoardInputs implements KeyListener {
     }
 
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
-                this.gamePanel.getGame().getPlayer().setJump(false);
+        switch(Gamestate.state) {
+            case MENU:
+                gamePanel.getGame().getMenu().keyReleased(e);
                 break;
-            case KeyEvent.VK_A:
-                this.gamePanel.getGame().getPlayer().setLeft(false);
-                break;
-            case KeyEvent.VK_D:
-                this.gamePanel.getGame().getPlayer().setRight(false);
-                break;
-            case KeyEvent.VK_S:
-                this.gamePanel.getGame().getPlayer().setDown(false);
-                break;
-        }
+            case PLAYING:  
+                gamePanel.getGame().getPlaying().keyReleased(e);
+                break; 
+            default:
+                break;    
+       }
     }
 
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
-                this.gamePanel.getGame().getPlayer().setJump(true);
+        switch(Gamestate.state) {
+            case MENU:
+                gamePanel.getGame().getMenu().keyPressed(e);
                 break;
-            case KeyEvent.VK_A:
-    
-                this.gamePanel.getGame().getPlayer().setLeft(true);
-                break;
-            case KeyEvent.VK_S:
-                this.gamePanel.getGame().getPlayer().setDown(true);
-                break;
-            case KeyEvent.VK_D:
-                this.gamePanel.getGame().getPlayer().setRight(true);
-                break;
-            // case KeyEvent.VK_SPACE:
-            // this.gamePanel.getGame().getPlayer().setJump(true);
-            // break;
-        }
+            case PLAYING:  
+                gamePanel.getGame().getPlaying().keyPressed(e);
+                break; 
+            default:
+                break;    
+           }
     }
 
 }
