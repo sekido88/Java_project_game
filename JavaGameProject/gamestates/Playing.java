@@ -8,11 +8,14 @@ import JavaGameProject.entites.Player;
 import JavaGameProject.levels.LevelManager;
 import JavaGameProject.main.Game;
 import JavaGameProject.main.GamePanel;
+import JavaGameProject.ui.PauseOverlay;
 
 public class Playing extends State implements StateMethods {
     private Player player;
     private LevelManager levelManager;
     private GamePanel gamePanel;
+    private PauseOverlay pauseOverlay;
+    private boolean paused = true;
 
     public Playing(Game game) {
         super(game);
@@ -23,7 +26,7 @@ public class Playing extends State implements StateMethods {
         newGamePanel();
         newLevelMangager();
         newPlayer();
-  
+        newPauseOverlay();
     }
 
     private void newGamePanel() {
@@ -31,7 +34,7 @@ public class Playing extends State implements StateMethods {
     }
 
     private void newPlayer() {
-        player = new Player(100, 300, 60, 100);
+        player = new Player(100, 300, (int) (60 * Game.SCALE), (int) (100 * Game.SCALE));
         if (gamePanel != null) {
             player.setAnimationTick(gamePanel.getAniSpeed());
         }
@@ -42,36 +45,51 @@ public class Playing extends State implements StateMethods {
         levelManager = new LevelManager(game);
     }
 
+    private void newPauseOverlay() {
+        pauseOverlay = new PauseOverlay();
+    }
+
     @Override
     public void update() {
         if (gamePanel != null && player != null) {
             player.update();
             gamePanel.repaint();
         }
+        pauseOverlay.update();
     }
 
     @Override
     public void draw(Graphics2D g2d) {
         player.render(g2d);
         levelManager.draw(g2d);
+        pauseOverlay.draw(g2d);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1){
+        if (e.getButton() == MouseEvent.BUTTON1) {
             player.setAttacking(true);
-       }
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+        if(paused) {
+            pauseOverlay.mousePressed(e);
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-       
+        if(paused) {
+            pauseOverlay.mouseMoved(e);
+        }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        if(paused) {
+            pauseOverlay.mouseReleased(e);
+        }
     }
 
     @Override

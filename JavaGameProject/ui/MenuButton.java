@@ -8,8 +8,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class MenuButton {
-    private static final int B_WIDTH_DEFAULT = 140;
-    private static final int B_HEIGHT_DEFAULT = 100;
+    private static final int B_WIDTH_DEFAULT = 200;
+    private static final int B_HEIGHT_DEFAULT = 80;
     private static final int B_WIDTH = (int) (B_WIDTH_DEFAULT * Game.SCALE);
     private static final int B_HEIGHT = (int) (B_HEIGHT_DEFAULT * Game.SCALE);
 
@@ -50,6 +50,10 @@ public class MenuButton {
     }
 
     public void update() {
+        updateAniIndex();
+    }
+
+    private void updateAniIndex() {
         aniIndex = 0;
         if (mouseOver) {
             aniIndex = 1;
@@ -73,20 +77,10 @@ public class MenuButton {
 
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
-        if (mouseOver) {
-            aniIndex = 1;
-        } else if (!mousePressed) {
-            aniIndex = 0;
-        }
     }
 
     public void setMousePressed(boolean mousePressed) {
         this.mousePressed = mousePressed;
-        if (mousePressed) {
-            aniIndex = 2;
-        } else if (!mouseOver) {
-            aniIndex = 0;
-        }
     }
 
     public void applyGamestate() {
@@ -95,10 +89,6 @@ public class MenuButton {
 
     public Gamestate getGamestateInButton() {
         return state;
-    }
-
-    public void setAniIndex(int aniIndex) {
-        this.aniIndex = aniIndex;
     }
 
     public void reset() {

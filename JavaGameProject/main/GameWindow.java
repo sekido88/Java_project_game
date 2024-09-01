@@ -21,12 +21,12 @@ public class GameWindow {
         jframe.addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowLostFocus(WindowEvent e) { // khi cửa sổ không được focus
-                System.out.println("thoat khoi nha tu");
+                // System.out.println("thoat khoi nha tu");
             }
 
             @Override
             public void windowGainedFocus(WindowEvent e) { // khi cửa sổ được focus
-                System.out.println("Vao lai nha tu");
+                // System.out.println("Vao lai nha tu");
             }
         });
     }

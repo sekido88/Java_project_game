@@ -22,20 +22,20 @@ public class Game implements Runnable {
     private Playing playing;
 
     public final static int TILE_DEFAULT_SIZE = 48;
-    public final static float SCALE = 1.0f;
+    public final static float SCALE = 1f;
     public final static int TILE_IN_WIDTH = 26;
     public final static int TILE_IN_HEIGHT = 14;
     public final static int TILES_SIZE = (int) (TILE_DEFAULT_SIZE * SCALE);
-    public final static int GAME_WIDTH = TILES_SIZE * TILE_IN_WIDTH;
-    public final static int GAME_HEIGHT = TILES_SIZE * TILE_IN_HEIGHT;
+    public final static int GAME_WIDTH = (TILES_SIZE * TILE_IN_WIDTH);
+    public final static int GAME_HEIGHT = (TILES_SIZE * TILE_IN_HEIGHT);
     public final static float GRAVITY = 9.8f * Game.SCALE;
 
     public Game() {
-   
+
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel); // Phải có gameWindow trước sau đó mới focus được
-        initClasses();
         gamePanel.requestFocus();
+        initClasses();
         startGameLoop();
     }
 
@@ -66,10 +66,16 @@ public class Game implements Runnable {
     public void render(Graphics2D g2d) {
         switch (Gamestate.state) {
             case MENU:
-                if(menu != null) menu.draw(g2d);
+                if (menu != null)
+                    menu.draw(g2d);
                 break;
             case PLAYING:
                 playing.draw(g2d);
+                break;
+            case OPTIONS:
+                break;
+            case QUIT:
+                System.exit(0);
                 break;
             default:
                 break;

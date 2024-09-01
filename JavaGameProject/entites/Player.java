@@ -1,6 +1,5 @@
 package JavaGameProject.entites;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import JavaGameProject.utilz.LoadSave;
@@ -14,7 +13,7 @@ public class Player extends Entity {
 
     private BufferedImage[][] animations;
     private int aniTick, aniIndex, aniSpeed = 10;
-    private PlayerAction playerAction = PlayerAction.Idle; // enum được ưu tiên hơn
+    private PlayerAction playerAction = PlayerAction.Idle;
 
     private boolean moving = false, attacking = false;
     private boolean left, up, right, down, jump;
@@ -142,7 +141,7 @@ public class Player extends Entity {
 
     private void updatePosY() {
 
-        if (!IsEntityOnFloor(hitBox, levelData)) {
+        if (!IsEntityOnFloor(hitBox, levelData) && !inAir ) {
             applyForce(gravity);
             inAir = true;
         } else {

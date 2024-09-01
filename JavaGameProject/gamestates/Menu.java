@@ -2,30 +2,45 @@ package JavaGameProject.gamestates;
 
 import JavaGameProject.main.Game;
 import JavaGameProject.ui.MenuButton;
+import JavaGameProject.utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class Menu extends State implements StateMethods {
 
     private MenuButton[] menuButtons;
-    private static final int BUTTON_SPACING = 10; // Khoảng cách giữa các nút
+    private BufferedImage backgroundImg;
+    private int menuX, menuY, menuWidth, menuHeight;
+    private int centerX = Game.GAME_WIDTH / 2;
+    private int startY = (int) (Game.GAME_HEIGHT / 10 * Game.SCALE);
+    private int buttonYSpacing = (int) (120 * Game.SCALE);
 
     public Menu(Game game) {
         super(game);
+        initMenuBackground();
         initButtons();
     }
 
-    private void initButtons() {
-        int centerX = Game.GAME_WIDTH / 2;
-        int startY = 50;
-        int buttonYSpacing = 120; // Khoảng cách giữa các nút theo chiều dọc
+    private void loadBackroung() {
+        backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND);
+    }
 
+    private void initMenuBackground() {
+        loadBackroung();
+        menuX = (int) ((centerX - (backgroundImg.getWidth() * Game.SCALE) / 2));
+        menuY = (int) (startY - 50);
+        menuWidth = (int) (backgroundImg.getWidth() * Game.SCALE);
+        menuHeight = (int) (backgroundImg.getHeight() * Game.SCALE + buttonYSpacing + 60);
+    }
+
+    private void initButtons() {
         menuButtons = new MenuButton[] {
-                new MenuButton(centerX, startY, 0, Gamestate.PLAYING),
-                new MenuButton(centerX, startY + buttonYSpacing, 1, Gamestate.OPTIONS),
-                new MenuButton(centerX, startY + 2 * buttonYSpacing, 2, Gamestate.QUIT)
+                new MenuButton(centerX, startY + (int) (100 * Game.SCALE), 0, Gamestate.PLAYING),
+                new MenuButton(centerX, startY + buttonYSpacing + (int) (100 * Game.SCALE), 1, Gamestate.OPTIONS),
+                new MenuButton(centerX, startY + 2 * buttonYSpacing + (int) (100 * Game.SCALE), 2, Gamestate.QUIT)
         };
     }
 
@@ -40,11 +55,13 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawString("MENU", Game.GAME_WIDTH / 2 - 20, 50);
+        g2d.drawString("MENU", Game.GAME_WIDTH / 2, 50);
 
+        g2d.drawImage(backgroundImg, menuX, menuY, menuWidth, menuHeight, null);
         for (MenuButton button : menuButtons) {
             button.draw(g2d);
         }
+
     }
 
     @Override
@@ -66,7 +83,6 @@ public class Menu extends State implements StateMethods {
         for (MenuButton button : menuButtons) {
             if (button.isMouseOver(e.getX(), e.getY())) {
                 if (button.getGamestateInButton().toString() != null) {
-                    button.setStateButton(button.getGamestateInButton().toString());
                     button.setMousePressed(true);
                     button.applyGamestate();
                 }
@@ -85,6 +101,7 @@ public class Menu extends State implements StateMethods {
                 break;
             }
         }
+        
     }
 
     @Override
