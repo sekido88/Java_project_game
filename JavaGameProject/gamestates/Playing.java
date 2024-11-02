@@ -9,12 +9,21 @@ import JavaGameProject.levels.LevelManager;
 import JavaGameProject.main.Game;
 import JavaGameProject.main.GamePanel;
 import JavaGameProject.ui.PauseOverlay;
+import JavaGameProject.utilz.LoadSave;
 
 public class Playing extends State implements StateMethods {
     private Player player;
     private LevelManager levelManager;
     private GamePanel gamePanel;
     private PauseOverlay pauseOverlay;
+
+    private int xLvlOffset;
+    private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
+    private int rightBorder = (int) (0.9 * Game.GAME_WIDTH);
+    private int lvlTileWide = LoadSave.GetLevelData()[0].length;
+    private int maxTileOffset = lvlTileWide - Game.TILE_IN_WIDTH;
+    private int maxLvlOffsetX = maxTileOffset * Game.TILES_SIZE;
+
     private boolean paused = true;
 
     public Playing(Game game) {
@@ -53,16 +62,34 @@ public class Playing extends State implements StateMethods {
     public void update() {
         if (gamePanel != null && player != null) {
             player.update();
+            checkCloseToBorder();
             gamePanel.repaint();
         }
         pauseOverlay.update();
     }
 
+    private void checkCloseToBorder() {
+        int playerX = (int) player.getHitBox().x;
+        int diff = playerX - xLvlOffset;
+
+        if (diff > rightBorder)
+            xLvlOffset += diff - rightBorder;
+        else if (diff < leftBorder) {
+            xLvlOffset += diff - leftBorder;
+        }
+
+        if(xLvlOffset > maxLvlOffsetX) 
+            xLvlOffset = maxLvlOffsetX;
+        else if (xLvlOffset < 0) 
+            xLvlOffset = 0;
+    }
+
     @Override
     public void draw(Graphics2D g2d) {
-        player.render(g2d);
+        player.render(g2d, xLvlOffset);
         levelManager.draw(g2d);
-        pauseOverlay.draw(g2d);
+        if(paused)
+            pauseOverlay.draw(g2d);
     }
 
     @Override
@@ -74,20 +101,20 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(paused) {
+        if (paused) {
             pauseOverlay.mousePressed(e);
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if(paused) {
+        if (paused) {
             pauseOverlay.mouseMoved(e);
         }
     }
 
     public void mouseReleased(MouseEvent e) {
-        if(paused) {
+        if (paused) {
             pauseOverlay.mouseReleased(e);
         }
     }

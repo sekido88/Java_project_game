@@ -3,11 +3,13 @@ package JavaGameProject.main;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import JavaGameProject.entites.Camera;
 import JavaGameProject.entites.Player;
 import JavaGameProject.gamestates.Gamestate;
 import JavaGameProject.gamestates.Menu;
 import JavaGameProject.gamestates.Playing;
 import JavaGameProject.levels.LevelManager;
+import JavaGameProject.utilz.LoadSave;
 
 public class Game implements Runnable {
 
@@ -17,9 +19,11 @@ public class Game implements Runnable {
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
     private Player player;
-
+    private Camera camera;
     private Menu menu;
     private Playing playing;
+
+
 
     public final static int TILE_DEFAULT_SIZE = 48;
     public final static float SCALE = 1f;
@@ -45,6 +49,7 @@ public class Game implements Runnable {
     }
 
     public void initClasses() {
+
         menu = new Menu(this);
         playing = new Playing(this);
     }
@@ -56,6 +61,7 @@ public class Game implements Runnable {
                 break;
             case PLAYING:
                 playing.update();
+        
                 break;
             default:
                 break;
@@ -146,4 +152,5 @@ public class Game implements Runnable {
     public GamePanel getGamePanel() {
         return this.gamePanel;
     }
+
 }

@@ -5,3 +5,7 @@ a = f / m;
 delta v = a * delta t;
 
 Download the software here: http://dragonbones.github.io/
+
+
+- Entity 
+Player sẽ kế thừa Entity và có checkBox

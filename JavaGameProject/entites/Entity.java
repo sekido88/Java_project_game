@@ -25,6 +25,11 @@ public abstract class Entity {
         g2d.drawRect((int)hitBox.x, (int)hitBox.y, (int)hitBox.width, (int)hitBox.height);
     }
 
+    protected Rectangle2D getHitbox() {
+        return hitBox;
+    }
+
+
     public void updateHitBox() {
         hitBox.x = (int) x;
         hitBox.y = (int) y;

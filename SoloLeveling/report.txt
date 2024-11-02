@@ -1,0 +1,93 @@
+B. CẤU TRÚC BÁO CÁO GAME OOP
+1. Phần Mở đầu
+
+Bối cảnh và nguồn cảm hứng
+Mục tiêu dự án
+Phạm vi và giới hạn
+Công nghệ sử dụng
+
+2. Phân tích Yêu cầu
+2.1. Yêu cầu Chức năng
+
+Gameplay cơ bản
+Hệ thống điểm số
+Tương tác người chơi
+Các tính năng đặc biệt
+
+2.2. Yêu cầu Phi Chức năng
+
+Hiệu suất
+Đồ họa và âm thanh
+Tính ổn định
+Khả năng mở rộng
+
+3. Thiết kế Hệ thống
+3.1. Kiến trúc Tổng thể
+
+Sơ đồ class diagram
+Mô tả các package chính
+Quan hệ giữa các thành phần
+
+3.2. Thiết kế Chi tiết
+
+Chi tiết từng class chính
+Các design patterns sử dụng
+Cơ chế xử lý game loop
+
+4. Cài đặt và Triển khai
+4.1. Cấu trúc Mã nguồn
+
+Tổ chức package
+Coding conventions
+Quản lý tài nguyên
+
+4.2. Chi tiết Triển khai
+
+Các thuật toán quan trọng
+Xử lý physics
+Quản lý đối tượng game
+
+5. Áp dụng OOP
+5.1. Nguyên lý OOP
+
+Encapsulation
+Inheritance
+Polymorphism
+Abstraction
+
+5.2. Design Patterns
+
+Các pattern đã áp dụng
+Lý do sử dụng
+Lợi ích đạt được
+
+6. Kiểm thử
+
+Phương pháp kiểm thử
+Kết quả kiểm thử
+Các vấn đề phát hiện và giải pháp
+
+7. Kết quả và Đánh giá
+7.1. Kết quả Đạt được
+
+Tính năng đã hoàn thành
+Hiệu suất hệ thống
+Trải nghiệm người dùng
+
+7.2. Hạn chế và Giải pháp
+
+Các vấn đề tồn tại
+Đề xuất cải tiến
+Hướng phát triển
+
+8. Kết luận
+
+Tổng kết dự án
+Bài học kinh nghiệm
+Hướng phát triển tương lai
+
+9. Tài liệu Tham khảo
+
+Sách và tài liệu
+Các nguồn tham khảo online
+Công cụ và framework

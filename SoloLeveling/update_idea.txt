@@ -1,0 +1,15 @@
+kĩ năng khi nhặt được vật phẩm đặc biệt 
+- Tên lửa có thể bay thay đường thẳng từ điểm này bay thẳng tới điểm của chuột click
+- Nếu bay vào tường thì sẽ chạm và theo hiệu ứng vật lý
+
+Vật phẩm tạo ra các star theo hình đặc biệt.
+
+- Ý tưởng : lấy cảm hứng từ game flappy bird của tác giả Nguyễn Hà Đông
+
+* Mô tả game : 
+- Gameplay : 
++ chú chim sẽ bay theo click chuột của người chơi dưới sự tác dụng của trọng lực
++ có một ngôi sao ở vị trí ngẫu nhiên trên màn hình và đảm bảo vị trí đó người chơi có thể ăn được
++ có các thiên thạch bay từ trên trời xuống nếu người chơi dính thiên thạch thì sẽ rơi xuống dưới 
++ có item shooting_star có hiệu ứng đặc biệt tạo ra một cơn mưa sao từ đó tăng điểm cho người chơi
++ khi người chơi ăn đủ %10 ngôi sao to thì sẽ xuất hiện một tập hợp các ngôi sao thành hình trái tim

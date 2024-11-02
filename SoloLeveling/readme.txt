@@ -1,0 +1,2 @@
+- File animation cua gameObject theo folder + action + _ + (index);
+- Hàm quy tắc đặt tên như biến

@@ -141,7 +141,7 @@ public class Player extends Entity {
 
     private void updatePosY() {
 
-        if (!IsEntityOnFloor(hitBox, levelData) && !inAir ) {
+        if (!IsEntityOnFloor(hitBox, levelData) && !inAir) {
             applyForce(gravity);
             inAir = true;
         } else {
@@ -155,17 +155,26 @@ public class Player extends Entity {
         if (CanMoveHere(hitBox.x, hitBox.y + velocity.y, hitBox.width, hitBox.height, levelData)) {
             this.y += velocity.y;
         }
+        
     }
 
-    private void drawPlayer(Graphics2D g2d) {
-        g2d.drawImage(animations[playerAction.ordinal()][aniIndex], (int) (hitBox.x - xDrawOffset),
+    private void drawPlayer(Graphics2D g2d, int xLvlOffset) {
+        g2d.drawImage(animations[playerAction.ordinal()][aniIndex], (int) (hitBox.x - xDrawOffset) - xLvlOffset,
                 (int) (hitBox.y - yDrawOffset), width, height,
                 null);
     }
 
-    public void render(Graphics2D g2d) {
-        drawPlayer(g2d);
+    public void render(Graphics2D g2d, int xLvlOffset) {
+        drawPlayer(g2d, xLvlOffset);
         drawHitBox(g2d);
+    }
+
+    public int getX() {
+        return (int) x;
+    }
+
+    public int getY() {
+        return (int) y;
     }
 
     public void resetDirBooleans() {
