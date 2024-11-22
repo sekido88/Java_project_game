@@ -1,1 +1,0 @@
-Việc bất đồng bộ giữa hàm event và vòng lặp fames của game 

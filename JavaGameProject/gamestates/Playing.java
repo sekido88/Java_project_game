@@ -78,9 +78,9 @@ public class Playing extends State implements StateMethods {
             xLvlOffset += diff - leftBorder;
         }
 
-        if(xLvlOffset > maxLvlOffsetX) 
+        if (xLvlOffset > maxLvlOffsetX)
             xLvlOffset = maxLvlOffsetX;
-        else if (xLvlOffset < 0) 
+        else if (xLvlOffset < 0)
             xLvlOffset = 0;
     }
 
@@ -88,7 +88,7 @@ public class Playing extends State implements StateMethods {
     public void draw(Graphics2D g2d) {
         player.render(g2d, xLvlOffset);
         levelManager.draw(g2d);
-        if(paused)
+        if (paused)
             pauseOverlay.draw(g2d);
     }
 

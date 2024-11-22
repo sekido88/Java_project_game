@@ -1,0 +1,575 @@
+classDiagram
+      class Game {
+        -GamePanel gamePanel
+        -GameWindow gameWindow
+        -Thread gameThread
+        -AudioPlayer audioPlayer
+        -boolean isGameOver
+        -final int FPS_SET
+        -final int UPS_SET
+        -final int GAME_HEIGHT
+        -final int GAME_WIDTH
+        -Vector2D GRAVITY
+        -Menu menu
+        -Playing playing
+        -GameOver gameOver
+        +startGameLoop()
+        +update()
+        +render(Graphics2D)
+        +getInstance() Game
+        +getPlaying() Playing
+        +getGameOver() GameOver
+    }
+    class MouseInputs {
+        +mouseMoved()
+        +mouseClicked() 
+        +mousePressed()
+        +mouseReleased()
+    }
+    class GamePanel {
+        -Graphics2D g2d
+        -MouseInputs mouseInputs
+        +initScreen()
+        +initInput()
+        +paintComponent(Graphics)
+    }
+     class GameWindow {
+        -JFrame jframe
+        +GameWindow(GamePanel)
+    }
+
+ class Playing {
+        -BufferedImage background_layer_1
+        -BufferedImage background_layer_2
+        -BufferedImage background_layer_3
+        -int playerPosX
+        -int playerPosY
+        -int playerWidth
+        -int playerHeight
+        -StarSpawner starSpawner
+        -ObstacleSpawner obstacleSpawner
+        -ItemSpawner itemSpawner
+        -Score score
+        -Player player
+        -long currentTime
+        -long lastTime
+        -final long delayTime
+        -initItemSpawner()
+        -initPlayer()
+        -initScore()
+        -initIStarSpawner()
+        -initObstacleSpawner()
+        -loadImageBackground()
+        -initClass()
+        -renderBackground(Graphics2D)
+        -checkGameIsOver()
+        +update()
+        +render(Graphics2D)
+        +mouseClicked(MouseEvent)
+        +getStarSpawner() StarSpawner
+        +getObstacleSpawner() ObstacleSpawner
+        +getScore() Score
+        +getPlayer() Player
+    }
+
+      class AudioPlayer {
+        -static AudioPlayer instance
+        -Map~String,Clip~ musicClips
+        -Map~String,Float~ musicVolumes
+        -boolean isMuted
+        -initAudio()
+        +getInstance() AudioPlayer
+        +loadMusic(String, String)
+        +play(String, boolean)
+        +stop(String)
+        +stopAll()
+        +setVolume(String, float)
+        +mute()
+        +unmute()
+        +dispose()
+    }
+
+    class SoundEffect {
+        <<enumeration>>
+        TAP
+        COIN_TAP
+        GOT_HIT
+        GAME_OVER
+        HAPPY_MOMENT
+        -String name
+        -String filePath
+        +getName() String
+        +getFilePath() String
+    }
+
+    class StateMethods {
+        <<interface>>
+        +update()
+        +render(Graphics2D)
+        +mouseClicked(MouseEvent)
+        +mousePressed(MouseEvent)
+        +mouseReleased(MouseEvent)
+        +mouseMoved(MouseEvent)
+        +mouseExited(MouseEvent)
+    }
+    class Gamestate {
+        <<enumeration>>
+        MENU
+        PLAYING
+        GAME_OVER
+        QUIT
+        +static Gamestate state
+    }
+    class Menu {
+        -BufferedImage background
+        -BufferedImage currentSprite
+        -BufferedImage playDefault
+        -BufferedImage playHover
+        -int playWidth
+        -int playHeight
+        -int posX
+        -int posY
+        -boolean isMousePressed
+        -boolean isMouseOver
+        -Font gameMenuFont
+        +update()
+        +render(Graphics2D)
+        -loadAnimations()
+        -isMouseInButton(int, int)
+        -setAnimation()
+    }
+   class GameOver {
+        -BufferedImage background
+        -BufferedImage currentSprite
+        -BufferedImage repeatDefault
+        -BufferedImage repeatHover
+        -int repeatWidth
+        -int repeatHeight
+        -int posX
+        -int posY
+        -boolean isMousePressed
+        -boolean isMouseOver
+        -Font gameOverFont
+        -Font highScoreFont
+        +GameOver()
+        -loadAnimations()
+        -isMouseInButton(int, int) boolean
+        -setAnimation()
+        -saveHighScore()
+        +update()
+        +render(Graphics2D)
+        +mouseClicked(MouseEvent)
+        +mousePressed(MouseEvent)
+        +mouseReleased(MouseEvent)
+        +mouseMoved(MouseEvent)
+    }
+    class Player {
+        -int minX
+        -int maxX
+        -int minY
+        -int maxY
+        -int aniTick
+        -int aniIndex
+        -int aniSpeed
+        -List~BufferedImage[]~ animations
+        -PlayerAction currentAction
+        -Rigidbody2D Rigidbody2D
+        -Vector2D forceToMouseClicked
+        -float speedForce
+        -double rotation
+        -double rotationSpeed
+        -boolean isAlive
+        +Player(float x, float y, int width, int height)
+        -initRigidbody2D()
+        -loadAnimations()
+        -updateAnimationTick()
+        -setAnimation(PlayerAction)
+        -getCurrentActionFrames() BufferedImage[]
+        -drawPlayer(Graphics2D)
+        +render(Graphics2D)
+        -updatePos()
+        +update()
+        +mouseClickForce()
+        +getIsAlive() boolean
+        +setIsAlive(boolean)
+    }
+
+    class PlayerAction {
+        <<enumeration>>
+        Idle
+        Got_Hit
+        -int spriteAmount
+        +getSpriteAmount() int
+    }
+    class AudioPlayer {
+        -static AudioPlayer instance
+        +play(String, boolean)
+        +getInstance() AudioPlayer
+    }
+
+    class GameObject {
+        #float x
+        #float y
+        #int width
+        #int height
+        #Vector2D position
+        #Collider2D collider2D
+        #boolean isActive
+        +getPosition() Vector2D
+        +getCollider2D() Collider2D
+    }
+
+
+ class Item {
+        #ItemType itemType
+        #Rigidbody2D Rigidbody2D
+        #BufferedImage img
+        #boolean isEffectActive
+        +update()
+        +render(Graphics2D)
+        #checkCollisionPlayer()
+        #onCollect()
+        +isActive() boolean
+        +getIsEffectActive() boolean
+    }
+
+   class ShootingStar {
+        -List~Star~ stars
+        -static final int STAR_COUNT
+        -Random random
+        -float effectDuration
+        -float effectTimer
+        -static final int STAR_SIZE
+        #onCollect()
+        -spawnStars(float)
+        -generateStarForce() Vector2D
+        +update()
+        +render(Graphics2D)
+    }
+
+    class ItemSpawner {
+        -List~Item~ items
+        -Random random
+        -float xMinSpawn
+        -float xMaxSpawn
+        -float yMinSpawn
+        -float yMaxSpawn
+        -final int MAX_ACTIVE_ITEMS
+        -long SPAWN_INTERVAL
+        -long lastSpawnTime
+        -setSpaceBounds()
+        -spawnItem()
+        -updateItems()
+        +update()
+        +render(Graphics2D)
+        +reset()
+    }
+
+    class ItemType {
+        <<enumeration>>
+        SHOOTING_STAR
+        -String spritePath
+        -int width
+        -int height
+        -float fallSpeed
+        +getSpritePath() String
+        +getWidth() int
+        +getHeight() int
+        +getFallSpeed() float
+        +getSprite() BufferedImage
+    }
+
+    class ItemState {
+        <<enumeration>>
+        SHOOTING_STAR
+        -String name
+        -boolean isEffect
+        +getName() String
+        +setName(String)
+        +isEffect() boolean
+        +setEffect(boolean)
+    }
+    class Obstacle {
+        -ObstacleType obstacleType
+        -Rigidbody2D Rigidbody2D
+        -BufferedImage img
+        -long delayTime
+        -long lastTime
+        +Obstacle(float x, float y, int width, int height, ObstacleType)
+        +Obstacle(float x, float y, ObstacleType)
+        +update()
+        -checkCollisionPlayer()
+        +render(Graphics2D)
+    }
+
+    class ObstacleSpawner {
+        -Random random
+        -List~Obstacle~ obstacles
+        -ObstacleType[] obstacleTypes
+        -float xMinSpawn
+        -float xMaxSpawn
+        -float yMinSpawn
+        -float yMaxSpawn
+        -final int MAX_ACTIVE_OBSTACLES
+        -long SPAWN_INTERVAL
+        -long lastSpawnTime
+        +ObstacleSpawner()
+        -setSpaceBounds()
+        -spawnObstacle()
+        -createObstacle(ObstacleType)
+        -getRandomX(int)
+        -getRandomY(int)
+        -spawnObstacles()
+        -updateObstacles()
+        +update()
+        +render(Graphics2D)
+        +reset()
+        +getObstacles() List~Obstacle~
+    }
+
+    class ObstacleType {
+        <<enumeration>>
+        FLAMING_METROR
+        -String spritePath
+        -int width
+        -int height
+        -float fallSpeed
+        +getSpritePath() String
+        +getWidth() int
+        +getHeight() int
+        +getFallSpeed() float
+        +getSprite() BufferedImage
+    }
+    
+      class Item {
+        #ItemType itemType
+        #Rigidbody2D Rigidbody2D
+        #BufferedImage img
+        #boolean isEffectActive
+        +Item(float x, float y, ItemType)
+        +update()
+        +render(Graphics2D)
+        #checkCollisionPlayer()
+        #onCollect()
+        +isActive() boolean
+        +getIsEffectActive() boolean
+    }
+
+    class ItemSpawner {
+        -List~Item~ items
+        -Random random
+        -float xMinSpawn
+        -float xMaxSpawn
+        -float yMinSpawn
+        -float yMaxSpawn
+        -final int MAX_ACTIVE_ITEMS
+        -long SPAWN_INTERVAL
+        -long lastSpawnTime
+        +ItemSpawner()
+        -setSpaceBounds()
+        -spawnItem()
+        -updateItems()
+        +update()
+        +render(Graphics2D)
+        +reset()
+    }
+
+    class ItemType {
+        <<enumeration>>
+        SHOOTING_STAR
+        -String spritePath
+        -int width
+        -int height
+        -float fallSpeed
+        +getSpritePath() String
+        +getWidth() int 
+        +getHeight() int
+        +getFallSpeed() float
+        +getSprite() BufferedImage
+    }
+
+    class ItemState {
+        <<enumeration>>
+        SHOOTING_STAR
+        -String name
+        -boolean isEffect
+        +getName() String
+        +setName(String)
+        +isEffect() boolean
+        +setEffect(boolean)
+    }
+
+    class ShootingStar {
+        -List~Star~ stars
+        -static final int STAR_COUNT
+        -Random random
+        -float effectDuration
+        -float effectTimer
+        -static final int STAR_SIZE
+        +ShootingStar(float x, float y)
+        #onCollect()
+        -spawnStars(float)
+        -generateStarForce() Vector2D
+        +update()
+        +render(Graphics2D)
+    }
+
+    class Star {
+        -BufferedImage imgStar
+        -Rigidbody2D Rigidbody2D
+        -boolean isApplyGravity
+        -Vector2D force
+        +update()
+        +render()
+        +setApplyGravity()
+    }
+    class StarSpawner {
+        -List~Star~ stars
+        -Random random
+        -float xMinSpawn
+        -float xMaxSpawn
+        -float yMinSpawn 
+        -float yMaxSpawn
+        +update()
+        +render()
+        -spawnHeartStars()
+    }
+
+    class Vector2D {
+        -float x
+        -float y
+        +multiply(float) Vector2D
+        +divide(float) Vector2D
+        +add(Vector2D) Vector2D
+        +normalize() Vector2D
+        +magnitude() float
+    }
+
+    class Rigidbody2D {
+        +float mass
+        +Vector2D velocity
+        +Vector2D acceleration
+        +Vector2D position
+        +float dragCoefficient
+        +float area
+        +float airDensity
+        +applyForce(Vector2D)
+        +applyGravity(Vector2D)
+        +applyDrag()
+        +update()
+    }
+
+    class Score {
+        -int score
+        -int highScore
+        -Font scoreFont
+        -Font highScoreFont
+        +addScore(int)
+        +resetScore()
+        +render(Graphics2D)
+    }
+
+    class Collider2D {
+        -Rectangle2D.Float hitBox
+        -static float DISTANCE_THRESHOLD
+        +boolean isTriger
+        +drawHitBox(Graphics2D)
+        +updateHitBox(Vector2D)
+        +static OnCollison2D(Collider2D, Collider2D) boolean
+    }
+ 
+     class LoadSave {
+        +loadImage(String) BufferedImage
+        +getSpriteAnimations(String, PlayerAction[]) List
+        +loadHighScore() int
+        +saveHighScore(int)
+    }
+
+    Game *-- GamePanel : contains
+    Game *-- GameWindow : contains
+
+    Game o-- AudioPlayer : uses
+    Game o-- Menu : has
+    Game o-- Playing : has
+    Game o-- GameOver : has
+    
+    GamePanel o-- MouseInputs : has
+
+    Playing ..|> StateMethods : implements
+    Menu ..|> StateMethods : implements
+    GameOver ..|> StateMethods : implements
+
+    Playing o-- Player : contains
+    Playing o-- StarSpawner : contains
+    Playing o-- ObstacleSpawner : contains
+    Playing o-- ItemSpawner : contains
+    Playing o-- Score : contains
+
+    GameObject <|-- Item : extends
+    GameObject <|-- Obstacle : extend
+    GameObject <|-- Player : extends
+    GameObject *-- Vector2D : has position
+    GameObject *-- Collider2D : has collider
+    GameObject -- Game : uses instance
+
+    Item <|-- ShootingStar : extends
+    Item *-- ItemType : has
+    Item *-- Rigidbody2D : has
+    ItemSpawner o-- Item : manages
+
+    ShootingStar -- ItemState : uses
+    ShootingStar *-- Star : contains many
+    
+    Star --|> GameObject : extends
+    Star *-- Rigidbody2D : has physics
+    Star *-- Vector2D : has force
+
+    ObstacleSpawner o-- Obstacle : manages
+    Obstacle *-- ObstacleType : has
+    Obstacle *-- Rigidbody2D : has
+
+    Menu --> Gamestate : uses
+    Playing --> Gamestate : uses
+    GameOver --> Gamestate : uses
+
+    GameOver --> Game : uses instance
+    Playing --> Game : uses instance
+    Menu --> Game : uses instance
+    
+    Player *-- PlayerAction : has state
+    Player *-- Rigidbody2D : has physics
+    Player *-- Vector2D : has force
+
+    Rigidbody2D *-- Vector2D : has velocity
+    Rigidbody2D *-- Vector2D : has position
+    Rigidbody2D *-- Vector2D : has acceleration
+   
+    Score -- LoadSave : uses
+    Playing --> LoadSave : uses
+    GameOver --> LoadSave : uses
+    Game -- Score : updates
+
+    LoadSave -- Player : loads sprites
+    LoadSave -- Menu : loads resources
+    LoadSave -- Item : loads sprites
+    LoadSave -- Obstacle : loads sprites
+    AudioPlayer -- LoadSave : loads audio files
+    ShootingStar -- Star : spawns
+    StarSpawner -- Star : manages
+    Player -- SoundEffect : plays effects
+    Item -- SoundEffect : plays effects
+    Obstacle -- SoundEffect : plays effects
+
+    GamePanel *-- MouseInputs : has
+    AudioPlayer -- SoundEffect : uses
+    MouseInputs -- Gamestate : uses
+      LoadSave -- BufferedImage : loads
+    Player -- BufferedImage : uses
+    Item -- BufferedImage : uses
+    Obstacle -- BufferedImage : uses
+    Menu -- BufferedImage : uses
+    GameOver -- BufferedImage : uses
+    Playing -- BufferedImage : uses
+     GameWindow *-- JFrame : contains
+    GameWindow -- GamePanel : displays
+    JFrame -- GamePanel : contains
