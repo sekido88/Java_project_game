@@ -58,7 +58,7 @@ public class Star extends GameObject {
                 && isActive) {
             Game.getInstance().getAudioPlayer().play("coin_tap", false);
             isActive = false;
-            Game.getInstance().getEffectManager().playEffect(EffectType.EFFECT_FIRE_WORK, position.x, position.y);
+            Game.getInstance().getEffectManager().playEffect(EffectType.FIRE_WORK, position.x, position.y);
             Game.getInstance().getPlaying().getScore().addScore(1);
        
         }

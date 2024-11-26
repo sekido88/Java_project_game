@@ -24,7 +24,7 @@ public  class LoadSave {
     // item
     public static final String STAR = "res/item/star.png";
     public static final String SHOOTING_STAR = "res/item/shotting_star_2.png";
-
+    public static final String SHIELD = "res/effect/spr_shield.png";
     // obstacle
     public static final String METEOR = "res/obstacle/meteor.png";
     public static final String FLAMING_METEOR = "res/obstacle/flaming_meteor.png";
@@ -49,9 +49,8 @@ public  class LoadSave {
 
     // efect
     public static final String EFFECT_FIRE_WORK = "res/effect/effect_fire_work.png";
-    public static final String GOT_HIT = "res/effect/X_plosion/spritesheet/spritesheet.png";
-
-
+    public static final String EFFECT_GOT_HIT = "res/effect/X_plosion/spritesheet/spritesheet.png";
+    public static final String EFFECT_SHIELD = "res/effect/spr_shield.png";
     public static int loadHighScore() {
         try {
             File file = new File(DATA_HIGH_SCORE);

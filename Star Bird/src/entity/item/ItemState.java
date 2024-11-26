@@ -1,7 +1,8 @@
 package entity.item;
 
 public enum ItemState {
-    SHOOTING_STAR("shooting_star",false);
+    SHOOTING_STAR("shooting_star",false),
+    SHIELD("shield",false);
 
     private String name;
     private boolean isEffect;

@@ -7,6 +7,7 @@ import unity.Vector2D;
 import java.awt.image.BufferedImage;
 
 import entity.efffect.EffectType;
+import entity.item.ItemState;
 
 import java.awt.Graphics2D;
 import main.Game;
@@ -16,6 +17,8 @@ public class Obstacle extends GameObject {
     private ObstacleType obstacleType;
     private Rigidbody2D Rigidbody2D;
     private BufferedImage img;
+
+    private int checkCollision = 1;
 
     public Obstacle(float x, float y, int width, int height, ObstacleType obstacleType) {
         super(x, y, width, height);
@@ -44,11 +47,23 @@ public class Obstacle extends GameObject {
 
     private void checkCollisionPlayer() {
 
-        if (collider2D.OnCollison2D(collider2D, Game.getInstance().getPlaying().getPlayer().getCollider2D())) {
-            Game.getInstance().getPlaying().getPlayer().setIsAlive(false);
+        if (collider2D.OnCollison2D(collider2D, Game.getInstance().getPlaying().getPlayer().getCollider2D()) && checkCollision == 1) {
+
+            checkCollision = 0;
+            Rigidbody2D.applyForce(new Vector2D(20, 100));
             Game.getInstance().getAudioPlayer().play("got_hit", false);
-            Game.getInstance().getEffectManager().playEffect(EffectType.GOT_HIT, Game.getInstance().getPlaying().getPlayer().getPosition().x,  Game.getInstance().getPlaying().getPlayer().getPosition().y);
+            Game.getInstance().getEffectManager().playEffect(EffectType.GOT_HIT,
+                    Game.getInstance().getPlaying().getPlayer().getPosition().x,
+                    Game.getInstance().getPlaying().getPlayer().getPosition().y);
+
+            if (ItemState.SHIELD.isEffect()) {
+                ItemState.SHIELD.setEffect(false);
+                return;
+            }
+
             Game.getInstance().setIsGameOver(true);
+            Game.getInstance().getPlaying().getPlayer().setIsAlive(false);
+
         }
     }
 

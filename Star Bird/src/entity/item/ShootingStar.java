@@ -7,7 +7,6 @@ import java.util.Random;
 
 import entity.star.Star;
 import main.Game;
-import unity.Collider2D;
 import unity.Vector2D;
 
 public class ShootingStar extends Item {
@@ -30,7 +29,6 @@ public class ShootingStar extends Item {
         Game.getInstance().getAudioPlayer().play("happy_momment", false);
         spawnStars(0);
         spawnStars(0);
-
         isEffectActive = true;
         ItemState.SHOOTING_STAR.setEffect(true);
 

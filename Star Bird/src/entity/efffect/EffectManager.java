@@ -43,6 +43,20 @@ public class EffectManager {
 
     }
 
+    public void playEffect(EffectType effectType, float x, float y, boolean isLooping) {
+        Effect effect = getEffectFromPool(effectType);
+        effect.setActive(true);
+        effect.play(x, y, isLooping);
+        effects.add(effect);
+    }
+
+    public void playEffect(EffectType effectType, float x, float y,int width, int height, boolean isLooping) {
+        Effect effect = getEffectFromPool(effectType);
+        effect.setActive(true);
+        effect.play(x, y, width, height, isLooping);
+        effects.add(effect);
+    }
+
     public void update() {
         if (!effects.isEmpty()) {
             for (Effect effect : effects) {
@@ -83,4 +97,13 @@ public class EffectManager {
         return newEffect;
     }
 
+    public Effect getEffect(EffectType effectType) {
+        List<Effect> pool = effectPool.get(effectType);
+        if (pool.isEmpty()) {
+            Effect newEffect = new Effect(0, 0, 100, 100, effectType);
+            pool.add(newEffect);
+            return newEffect;
+        }
+        return pool.get(0);
+    }
 }

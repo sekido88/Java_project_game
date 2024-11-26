@@ -19,7 +19,7 @@ public class Effect extends GameObject {
 
 
     public Effect(float x, float y,int width, int height, EffectType effectType) {
-        super(x, y, effectType.getWidth(), effectType.getHeight());
+        super(x, y, width, height);
         this.effectType = effectType;
         this.animations = effectType.getAnimations();
         this.isLooping = false;
@@ -55,6 +55,7 @@ public class Effect extends GameObject {
         if (!isActive)
             return;
         updateAnimationTick();
+        setCollider2D(position);
     }
 
     public void render(Graphics2D g2d) {
@@ -65,13 +66,29 @@ public class Effect extends GameObject {
         g2d.drawImage(currentFrame, (int) position.x, (int) position.y, width, height, null);
     }
 
+    public void play(float x, float y, boolean isLooping) {
+        reset();
+        this.isLooping = isLooping;
+        setPosition(x, y);
+        isActive = true;
+      
+    }
+
+    public void play(float x, float y, int width, int height, boolean isLooping) {
+        reset();
+        this.isLooping = isLooping;
+        this.width = width;
+        this.height = height;
+        setPosition(x, y);
+        isActive = true;
+    }
+    
     public void play(float x, float y) {
         reset();
         setPosition(new Vector2D(x, y));
         isActive = true;
     }
     
-
     public boolean isFinished() {
         return isFinished;
     }

@@ -4,7 +4,8 @@ import untilz.LoadSave;
 import java.awt.image.BufferedImage;
 
 public enum ItemType {
-    SHOOTING_STAR(LoadSave.SHOOTING_STAR, 40, 80,0.5f);
+    SHOOTING_STAR(LoadSave.SHOOTING_STAR, 40, 80,0.5f),
+    SHIELD(LoadSave.SHIELD, 40, 80,0.5f);
 
     private final String spritePath;
     private final int width;

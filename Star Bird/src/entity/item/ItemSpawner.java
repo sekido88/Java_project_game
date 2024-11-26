@@ -15,14 +15,18 @@ public class ItemSpawner {
     private float yMinSpawn;
     private float yMaxSpawn;
 
-    private final int MAX_ACTIVE_ITEMS = 3;
-    private long SPAWN_INTERVAL = 15000; // 10 seconds
-    private long lastSpawnTime;
+    private final int MAX_ACTIVE_ITEMS = 5;
+    private long SPAWN_INTERVAL_SHIELD = 10000; 
+    private long SPAWN_INTERVAL_SHOOTING_STAR = 15000;
+
+    private long lastShieldSpawnTime;
+private long lastShootingStarSpawnTime;
 
     public ItemSpawner() {
         items = new ArrayList<>();
         random = new Random();
-        lastSpawnTime = System.currentTimeMillis();
+        lastShieldSpawnTime = System.currentTimeMillis();
+        lastShootingStarSpawnTime = System.currentTimeMillis();
         setSpaceBounds();
     }
 
@@ -33,13 +37,19 @@ public class ItemSpawner {
         yMaxSpawn = (float) (0);
     }
 
-    private void spawnItem() {
+    private void spawnShield() {
         if (items.size() >= MAX_ACTIVE_ITEMS)
-            return;
+        return;
+        float x = random.nextFloat(xMinSpawn, xMaxSpawn - ItemType.SHIELD.getWidth());
+        float y = random.nextFloat(yMinSpawn, yMaxSpawn);
+        items.add(new Shield(x, y));
+    }
 
+    private void spawnShootingStar() {
+        if (items.size() >= MAX_ACTIVE_ITEMS)
+        return;
         float x = random.nextFloat(xMinSpawn, xMaxSpawn - ItemType.SHOOTING_STAR.getWidth());
         float y = random.nextFloat(yMinSpawn, yMaxSpawn);
-
         items.add(new ShootingStar(x, y));
     }
 
@@ -61,16 +71,22 @@ public class ItemSpawner {
 
     public void update() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastSpawnTime >= SPAWN_INTERVAL) {
-            spawnItem();
-            lastSpawnTime = currentTime;
+        
+        if (currentTime - lastShieldSpawnTime >= SPAWN_INTERVAL_SHIELD) {
+            spawnShield();
+            lastShieldSpawnTime = currentTime;
         }
-
+    
+        if (currentTime - lastShootingStarSpawnTime >= SPAWN_INTERVAL_SHOOTING_STAR) {
+            spawnShootingStar();
+            lastShootingStarSpawnTime = currentTime;
+        }
+    
         updateItems();
     }
 
     public void render(Graphics2D g2d) {
-        if(!items.isEmpty()) {
+        if (!items.isEmpty()) {
             for (Item item : items) {
                 item.render(g2d);
             }
@@ -79,6 +95,7 @@ public class ItemSpawner {
 
     public void reset() {
         items.clear();
-        lastSpawnTime = System.currentTimeMillis();
+        lastShieldSpawnTime = System.currentTimeMillis();
+        lastShootingStarSpawnTime = System.currentTimeMillis();
     }
 }

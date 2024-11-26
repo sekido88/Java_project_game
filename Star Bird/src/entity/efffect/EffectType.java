@@ -4,15 +4,16 @@ import untilz.LoadSave;
 
 public enum EffectType {
 
-    EFFECT_FIRE_WORK("effect_fire_work", LoadSave.EFFECT_FIRE_WORK, 98, 86, 73),
-    GOT_HIT("got_hit", LoadSave.GOT_HIT, 100, 100, 64);
- 
+    FIRE_WORK("effect_fire_work", LoadSave.EFFECT_FIRE_WORK, 98, 86, 73),
+    GOT_HIT("got_hit", LoadSave.EFFECT_GOT_HIT, 100, 100, 64),
+    SHIELD("shield", LoadSave.EFFECT_SHIELD, 556, 556, 1);
+
     private int width;
     private int height;
     private String name;
     private String filePath;
     private BufferedImage[] animation;
-    
+
 
     EffectType(String name, String filePath,int width, int height, int spriteCount) {
         this.width = width;

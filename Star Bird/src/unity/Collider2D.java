@@ -40,5 +40,4 @@ public class Collider2D {
 
         return collisionX && collisionY;
     }
-
 }

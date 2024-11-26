@@ -8,10 +8,12 @@ import main.Game;
 import unity.GameObject;
 import unity.Rigidbody2D;
 import unity.Vector2D;
+import entity.efffect.EffectType;
 
 import java.awt.geom.AffineTransform;
 
 import java.util.List;
+import entity.efffect.Effect;
 
 import game_states.Gamestate;
 
@@ -175,7 +177,9 @@ public class Player extends GameObject {
         }
 
         updatePos();
+
         collider2D.updateHitBox(position);
+
         updateAnimationTick();
     }
 
